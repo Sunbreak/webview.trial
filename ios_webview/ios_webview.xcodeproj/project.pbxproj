@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		6D4AC7F1259BD8BE00CBD14E /* UIView+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D4AC7F0259BD8BE00CBD14E /* UIView+Extensions.swift */; };
+		6D4AC7FB259BDB9A00CBD14E /* NSObject+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D4AC7FA259BDB9A00CBD14E /* NSObject+Extensions.swift */; };
 		7CA5E377259B044D00246CC2 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CA5E376259B044D00246CC2 /* AppDelegate.swift */; };
 		7CA5E37B259B044D00246CC2 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CA5E37A259B044D00246CC2 /* ViewController.swift */; };
 		7CA5E380259B044E00246CC2 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 7CA5E37F259B044E00246CC2 /* Assets.xcassets */; };
@@ -33,6 +35,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		6D4AC7F0259BD8BE00CBD14E /* UIView+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+Extensions.swift"; sourceTree = "<group>"; };
+		6D4AC7FA259BDB9A00CBD14E /* NSObject+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSObject+Extensions.swift"; sourceTree = "<group>"; };
 		7CA5E373259B044D00246CC2 /* ios_webview.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ios_webview.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		7CA5E376259B044D00246CC2 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		7CA5E37A259B044D00246CC2 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -100,6 +104,8 @@
 				7CA5E37F259B044E00246CC2 /* Assets.xcassets */,
 				7CA5E381259B044E00246CC2 /* LaunchScreen.storyboard */,
 				7CA5E384259B044E00246CC2 /* Info.plist */,
+				6D4AC7F0259BD8BE00CBD14E /* UIView+Extensions.swift */,
+				6D4AC7FA259BDB9A00CBD14E /* NSObject+Extensions.swift */,
 			);
 			path = ios_webview;
 			sourceTree = "<group>";
@@ -251,8 +257,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				6D4AC7F1259BD8BE00CBD14E /* UIView+Extensions.swift in Sources */,
 				7CA5E37B259B044D00246CC2 /* ViewController.swift in Sources */,
 				7CA5E377259B044D00246CC2 /* AppDelegate.swift in Sources */,
+				6D4AC7FB259BDB9A00CBD14E /* NSObject+Extensions.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
