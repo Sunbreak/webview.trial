@@ -4,9 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.webkit.JsResult
-import android.webkit.WebChromeClient
-import android.webkit.WebView
+import android.webkit.*
 import android.widget.Button
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
@@ -52,19 +50,6 @@ class MainFragment : Fragment() {
     }
 }
 
-val html = """
-<html>
-  <head>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>hello</title>
-  </head>
-  <body>
-    <script>alert('My Alert');</script>
-    <div>hello, world!</div>
-  </body>
-</html>
-""".trimIndent()
-
 class WebViewFragment : Fragment() {
 
     override fun onCreateView(
@@ -82,12 +67,35 @@ class WebViewFragment : Fragment() {
 
         webView = view.findViewById(R.id.webView)
         webView.settings.javaScriptEnabled = true
+        webView.webViewClient = webViewClient
         webView.webChromeClient = chromeClient
 
-        webView.loadData(html, "text/html", "UTF-8")
+        webView.loadUrl("https://sunbreak.github.io/webview.trial/index.html")
     }
 
-    val chromeClient = object : WebChromeClient() {
+    private val webViewClient = object : WebViewClient() {
+        override fun shouldInterceptRequest(view: WebView, url: String): WebResourceResponse? {
+            println("shouldInterceptRequest(WebView, url) $url")
+            return intercept(url) ?: super.shouldInterceptRequest(view, url)
+        }
+
+        override fun shouldInterceptRequest(view: WebView, request: WebResourceRequest): WebResourceResponse? {
+            println("shouldInterceptRequest(WebView, WebResourceRequest) ${request.url}")
+            return intercept(request.url.toString()) ?: super.shouldInterceptRequest(view, request)
+        }
+    }
+
+    private fun intercept(url: String): WebResourceResponse? {
+        if (url == "https://sunbreak.github.io/webview.trial/index.js") {
+            val data = "alert('Local alert');".byteInputStream()
+            return WebResourceResponse("application/javascript", "utf-8", data).apply {
+                setStatusCodeAndReasonPhrase(200, "OK")
+            }
+        }
+        return null
+    }
+
+    private val chromeClient = object : WebChromeClient() {
         override fun onJsAlert(view: WebView?, url: String?, message: String?, result: JsResult?): Boolean {
             println("onJsAlert $url, $message")
             return super.onJsAlert(view, url, message, result)
