@@ -49,6 +49,19 @@ extension ViewController {
     }
 }
 
+let html = """
+<html>
+  <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>hello</title>
+  </head>
+  <body>
+    <script>alert('My Alert');</script>
+    <div>hello, world!</div>
+  </body>
+</html>
+"""
+
 class WebViewController: UIViewController, WKUIDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -59,7 +72,7 @@ class WebViewController: UIViewController, WKUIDelegate {
         }
         webView.uiDelegate = self
 
-        webView.load(URLRequest(url: URL(string: "https://www.w3schools.com/jsref/tryit.asp?filename=tryjsref_alert")!))
+        webView.loadHTMLString(html, baseURL: nil)
     }
     
     func webView(_ webView: WKWebView, runJavaScriptAlertPanelWithMessage message: String, initiatedByFrame frame: WKFrameInfo, completionHandler: @escaping () -> Void) {
