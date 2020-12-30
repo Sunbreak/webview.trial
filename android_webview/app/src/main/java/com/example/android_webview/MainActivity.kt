@@ -4,6 +4,8 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.webkit.JsResult
+import android.webkit.WebChromeClient
 import android.webkit.WebView
 import android.widget.Button
 import androidx.appcompat.app.AppCompatActivity
@@ -67,7 +69,15 @@ class WebViewFragment : Fragment() {
 
         webView = view.findViewById(R.id.webView)
         webView.settings.javaScriptEnabled = true
+        webView.webChromeClient = chromeClient
 
-        webView.loadUrl("https://github.com")
+        webView.loadUrl("https://www.w3schools.com/jsref/tryit.asp?filename=tryjsref_alert")
+    }
+
+    val chromeClient = object : WebChromeClient() {
+        override fun onJsAlert(view: WebView?, url: String?, message: String?, result: JsResult?): Boolean {
+            println("onJsAlert $url, $message")
+            return super.onJsAlert(view, url, message, result)
+        }
     }
 }
