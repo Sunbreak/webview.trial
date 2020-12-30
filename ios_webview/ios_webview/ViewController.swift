@@ -2,7 +2,7 @@
 //  ViewController.swift
 //  ios_webview
 //
-//  Created by byted on 2020/12/29.
+//  Created by sunbreak on 2020/12/29.
 //
 
 import UIKit
@@ -11,6 +11,49 @@ import WebKit
 class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.title = "ViewController"
+        self.view.backgroundColor = UIColor.white
+
+        let scrollView = view.layout(subView: UIScrollView()) {
+            $0.matchParent()
+        }
+
+        scrollView.layout(subView: UIStackView()) { stackView in
+            stackView.matchParent()
+            stackView.axis = .vertical
+            self.webView = self.addArrangedButton(to: stackView, with: "WebView")
+        }
+    }
+
+    var webView: UIButton!
+
+    @objc func buttonDidClick(_ sender: UIButton) {
+        switch sender {
+        case webView:
+            self.navigationController?.pushViewController(WebViewController(), animated: false)
+        default:
+            print("Unknown sender \(sender)")
+        }
+    }
+}
+
+extension ViewController {
+    func addArrangedButton(to stackView: UIStackView, with title: String) -> UIButton {
+        return stackView.arrangedLayout(subView: UIButton()) {
+            $0.setTitle(title, for: .normal)
+            $0.setTitleColor(.blue, for: .normal)
+            $0.alignParentLeading().alignParentTrailing()
+            $0.heightAnchor.constraint(equalToConstant: 40).isActive = true
+            $0.addTarget(self, action: #selector(self.buttonDidClick), for: .touchUpInside)
+        }
+    }
+}
+
+class WebViewController: UIViewController {
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        self.title = "WebViewController"
+
         let webview = view.layout(subView: WKWebView()) {
             $0.matchParent()
         }
@@ -18,47 +61,3 @@ class ViewController: UIViewController {
         webview.load(URLRequest(url: URL(string: "https://github.com")!))
     }
 }
-
-extension UIView {
-    @discardableResult
-    func layout<E: UIView>(subView: E, closure: ((E) -> Void)? = nil) -> E {
-        self.addSubview(subView)
-        closure?(subView)
-        return subView
-    }
-
-    @discardableResult
-    func alignParentLeading() -> Self {
-        self.leadingAnchor.constraint(equalTo: self.superview!.leadingAnchor).isActive = true
-        return self
-    }
-
-    @discardableResult
-    func alignParentTrailing() -> Self {
-        self.trailingAnchor.constraint(equalTo: self.superview!.trailingAnchor).isActive = true
-        return self
-    }
-
-    @discardableResult
-    func alignParentTop(_ systemSpace: Bool = false) -> Self {
-        if systemSpace {
-            self.topAnchor.constraint(equalToSystemSpacingBelow: self.superview!.topAnchor, multiplier: 1).isActive = true
-        } else {
-            self.topAnchor.constraint(equalTo: self.superview!.topAnchor).isActive = true
-        }
-        return self
-    }
-
-    @discardableResult
-    func alignParentBottom() -> Self {
-        self.bottomAnchor.constraint(equalTo: self.superview!.bottomAnchor).isActive = true
-        return self
-    }
-
-    @discardableResult
-    func matchParent() -> Self {
-        self.translatesAutoresizingMaskIntoConstraints = false
-        return alignParentLeading().alignParentTrailing().alignParentTop().alignParentBottom()
-    }
-}
-
