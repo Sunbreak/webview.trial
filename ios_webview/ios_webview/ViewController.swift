@@ -49,15 +49,22 @@ extension ViewController {
     }
 }
 
-class WebViewController: UIViewController {
+class WebViewController: UIViewController, WKUIDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         self.title = "WebViewController"
 
-        let webview = view.layout(subView: WKWebView()) {
+        let webView = view.layout(subView: WKWebView()) {
             $0.matchParent()
         }
+        webView.uiDelegate = self
 
-        webview.load(URLRequest(url: URL(string: "https://github.com")!))
+        webView.load(URLRequest(url: URL(string: "https://www.w3schools.com/jsref/tryit.asp?filename=tryjsref_alert")!))
+    }
+    
+    func webView(_ webView: WKWebView, runJavaScriptAlertPanelWithMessage message: String, initiatedByFrame frame: WKFrameInfo, completionHandler: @escaping () -> Void) {
+        let alertController = UIAlertController(title: message, message: nil, preferredStyle: .alert)
+        alertController.addAction(UIAlertAction(title: "OK", style: .cancel) { _ in completionHandler() })
+        self.present(alertController, animated: true, completion: nil)
     }
 }
