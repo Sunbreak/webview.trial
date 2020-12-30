@@ -52,6 +52,19 @@ class MainFragment : Fragment() {
     }
 }
 
+val html = """
+<html>
+  <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>hello</title>
+  </head>
+  <body>
+    <script>alert('My Alert');</script>
+    <div>hello, world!</div>
+  </body>
+</html>
+""".trimIndent()
+
 class WebViewFragment : Fragment() {
 
     override fun onCreateView(
@@ -71,7 +84,7 @@ class WebViewFragment : Fragment() {
         webView.settings.javaScriptEnabled = true
         webView.webChromeClient = chromeClient
 
-        webView.loadUrl("https://www.w3schools.com/jsref/tryit.asp?filename=tryjsref_alert")
+        webView.loadData(html, "text/html", "UTF-8")
     }
 
     val chromeClient = object : WebChromeClient() {
