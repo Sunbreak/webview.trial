@@ -12,6 +12,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     var window: UIWindow?
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
+        HttpURLProtocol.register()
+
         window = UIWindow(frame: UIScreen.main.bounds).apply {
             $0.rootViewController = UINavigationController().apply { nav in
                 nav.viewControllers = [ViewController()]
